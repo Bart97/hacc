@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
-project(HACC)
+project(HACC CXX)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+
+enable_testing()
 
 add_subdirectory(deps)
 add_subdirectory(source)

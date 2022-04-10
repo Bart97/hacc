@@ -1,1 +1,4 @@
+add_subdirectory(gateways)
+add_subdirectory(itf)
+add_subdirectory(protocol)
 add_subdirectory(startup)
