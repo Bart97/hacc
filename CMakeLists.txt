@@ -13,7 +13,8 @@ add_subdirectory(source)
 
 #SET(Boost_USE_STATIC_LIBS ON)
 #FIND_PACKAGE(Boost 1.54 COMPONENTS log REQUIRED)
+FIND_PACKAGE( Boost 1.60 COMPONENTS system REQUIRED )
 
 add_executable(hacc $<TARGET_OBJECTS:startup>)
 
-target_link_libraries(hacc startup)
+target_link_libraries(hacc startup Boost::system)

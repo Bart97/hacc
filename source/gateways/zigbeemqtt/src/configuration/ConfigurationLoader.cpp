@@ -1,4 +1,5 @@
 #include "gateway/zigbeemqtt/configuration/ConfigurationLoader.hpp"
+#include "spdlog/spdlog.h"
 
 namespace gateway::zigbeemqtt::configuration
 {
@@ -33,6 +34,7 @@ catch (std::out_of_range&)
 
 void ConfigurationLoader::storeConfiguration(Configuration configuration)
 {
+    spdlog::info("Loading configuration for device {}", configuration.deviceIdentifier);
     loadedConfigurations.insert({configuration.deviceIdentifier, std::move(configuration)});
 }
 } // namespace gateway::zigbeemqtt::configuration

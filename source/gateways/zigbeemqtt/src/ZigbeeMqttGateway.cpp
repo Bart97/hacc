@@ -2,6 +2,7 @@
 
 #include "gateway/zigbeemqtt/messages/Device.hpp"
 #include <json/json.h>
+#include "spdlog/spdlog.h"
 
 
 namespace gateway::zigbeemqtt
@@ -9,7 +10,7 @@ namespace gateway::zigbeemqtt
 ZigbeeMqttGateway::ZigbeeMqttGateway(std::shared_ptr<protocol::mqtt::IMqttClient> mqttClient) : mqttClient(
         std::move(mqttClient))
 {
-
+    this->mqttClient->subscribe("zigbee2mqtt/bridge/devices", [](const auto& msg) { spdlog::info("Devices published! {}", msg.payload);});
 }
 
 std::shared_ptr<device::IDevice> ZigbeeMqttGateway::getDeviceById()

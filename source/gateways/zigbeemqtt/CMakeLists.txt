@@ -16,7 +16,8 @@ target_link_libraries(${TARGET_NAME}
         PUBLIC
             itf
             mqtt
-            ${JSONCPP_LIBRARIES})
+            ${JSONCPP_LIBRARIES}
+            spdlog::spdlog)
 target_include_directories(${TARGET_NAME} PUBLIC inc)
 
 add_subdirectory(ut)
