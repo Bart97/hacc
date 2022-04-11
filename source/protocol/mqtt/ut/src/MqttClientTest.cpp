@@ -1,19 +1,11 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "protocol/mqtt/MqttClient.hpp"
+#include "protocol/mqtt/mocks/MqttWrapperMock.hpp"
 
 using namespace ::testing;
 namespace protocol::mqtt
 {
-
-class MqttWrapperMock: public IMqttWrapper
-{
-public:
-    MOCK_METHOD3(publish, void(const std::string&, const std::string&, Qos));
-    MOCK_METHOD2(subscribe, void(const std::string&, Qos));
-    MOCK_METHOD1(setPublishCallback, void(PublishCallback));
-};
-
 class MqttClientTest: public Test
 {
 public:

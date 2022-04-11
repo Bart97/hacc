@@ -8,6 +8,7 @@ set(TARGET_HEADERS
     inc/gateway/zigbeemqtt/configuration/Configuration.hpp
     inc/gateway/zigbeemqtt/configuration/ConfigurationLoader.hpp
     inc/gateway/zigbeemqtt/configuration/IConfigurationLoader.hpp
+    inc/gateway/zigbeemqtt/IDeviceFactory.hpp
     inc/gateway/zigbeemqtt/ZigbeeDevice.hpp
     inc/gateway/zigbeemqtt/ZigbeeMqttGateway.hpp)
 

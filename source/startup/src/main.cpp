@@ -17,7 +17,7 @@ int main()
     auto mqttWrapper = protocol::mqtt::createMqttWrapper("hacc", mqttHost, mqttPort);
     auto mqttClient = std::make_shared<protocol::mqtt::MqttClient>(mqttWrapper);
 
-    gateway::zigbeemqtt::ZigbeeMqttGateway gwy{mqttClient};
+    gateway::zigbeemqtt::ZigbeeMqttGateway gwy{mqttClient, nullptr};
 
     while (true)
     {
