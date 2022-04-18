@@ -58,11 +58,7 @@ MqttWrapper::~MqttWrapper()
 void MqttWrapper::onConnected(::mqtt::connect_return_code connack_return_code)
 {
     spdlog::info("[MQTT] Connection callback: {}", ::MQTT_NS::connect_return_code_to_str(connack_return_code));
-    if (connack_return_code == ::MQTT_NS::connect_return_code::accepted)
-    {
-        subscribe("mqtt_client_cpp/topic2_1", Qos::ExactlyOnce);
-    }
-    else
+    if (connack_return_code != ::MQTT_NS::connect_return_code::accepted)
     {
         spdlog::error("[MQTT] Connection failed: {}", ::MQTT_NS::connect_return_code_to_str(connack_return_code));
     }
@@ -72,7 +68,6 @@ void MqttWrapper::onPublish(::mqtt::optional<PacketId> /*packetId*/,
                        ::mqtt::publish_options /*pubopts*/, const std::string& topic, const std::string& payload)
 {
     spdlog::debug("[MQTT] Received topic {}: {}", topic, payload);
-    publish("mqtt_client_cpp/topic2_2", payload, Qos::ExactlyOnce);
     if (not publishCallback)
     {
         spdlog::warn("[MQTT] Publish callback not set");

@@ -4,6 +4,7 @@
 #include <vector>
 #include "device/CapabilityType.hpp"
 #include "device/SensorType.hpp"
+#include "gateway/zigbeemqtt/configuration/DeviceIdentifier.hpp"
 
 namespace gateway::zigbeemqtt::configuration
 {

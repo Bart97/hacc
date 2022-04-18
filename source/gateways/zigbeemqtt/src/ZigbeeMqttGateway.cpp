@@ -36,7 +36,15 @@ void ZigbeeMqttGateway::onConfigurationChanged(const messages::Devices& newDevic
                 [&id = device.ieeeAddress](const auto& dev) { return dev->getIdentifier() == id;}) == std::end(devices))
         {
             spdlog::info("Detected new device: {}", device.ieeeAddress);
-            devices.emplace_back(deviceFactory->createDevice(device));
+            if (auto newDevice = deviceFactory->createDevice(device))
+            {
+                spdlog::info("Created a new device {}", newDevice->getIdentifier());
+                devices.emplace_back(std::move(newDevice));
+            }
+            else
+            {
+                spdlog::error("Could not create a new device for {}", device.ieeeAddress);
+            }
         }
     }
 }

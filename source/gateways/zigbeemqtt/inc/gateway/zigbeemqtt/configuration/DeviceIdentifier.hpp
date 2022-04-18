@@ -11,17 +11,10 @@ struct DeviceIdentifier
     std::string manufacturer;
     std::string modelId;
 
-    bool operator== (const DeviceIdentifier& other) const
-    {
-        return manufacturer == other.manufacturer and modelId == other.modelId;
-    }
+    bool operator== (const DeviceIdentifier& other) const;
 };
 
-std::ostream& operator<<(std::ostream& os, const DeviceIdentifier& identifier)
-{
-    os << "[\"" << identifier.manufacturer << "\", \"" << identifier.modelId << "\"]";
-    return os;
-}
+std::ostream& operator<<(std::ostream& os, const DeviceIdentifier& identifier);
 } // namespace gateway::zigbeemqtt::configuration
 
 template<>

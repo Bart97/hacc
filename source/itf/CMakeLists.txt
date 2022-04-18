@@ -1,6 +1,7 @@
 set(TARGET_HEADERS
     inc/itf/IGateway.hpp
     inc/device/CapabilityType.hpp
+    inc/device/ICapability.hpp
     inc/device/IDevice.hpp
     inc/device/SensorType.hpp)
 

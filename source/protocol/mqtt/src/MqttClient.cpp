@@ -1,4 +1,5 @@
 #include "protocol/mqtt/MqttClient.hpp"
+#include "spdlog/spdlog.h"
 #include <algorithm>
 #include <boost/range.hpp>
 #include <ranges>
@@ -33,6 +34,7 @@ void MqttClient::publish(const std::string& title, const std::string& payload)
 
 void MqttClient::subscribe(const std::string& topic, PublishCallback callback)
 {
+    spdlog::debug("[MQTT] Subscribing to topic {}", topic);
     callbackMap.insert({topic, std::move(callback)});
     wrapper->subscribe(topic, Qos::ExactlyOnce);
 }

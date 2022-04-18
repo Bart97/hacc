@@ -3,6 +3,7 @@
 #include "protocol/mqtt/MqttWrapperFactory.hpp"
 #include "protocol/mqtt/MqttClient.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGateway.hpp"
+#include "gateway/zigbeemqtt/ZigbeeMqttGatewayFactory.hpp"
 
 namespace
 {
@@ -17,7 +18,7 @@ int main()
     auto mqttWrapper = protocol::mqtt::createMqttWrapper("hacc", mqttHost, mqttPort);
     auto mqttClient = std::make_shared<protocol::mqtt::MqttClient>(mqttWrapper);
 
-    gateway::zigbeemqtt::ZigbeeMqttGateway gwy{mqttClient, nullptr};
+    auto zigbeeGateway = gateway::zigbeemqtt::createZigbeeMqttGateway(mqttClient);
 
     while (true)
     {
