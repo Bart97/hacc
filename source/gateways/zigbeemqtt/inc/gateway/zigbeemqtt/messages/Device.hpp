@@ -4,7 +4,7 @@
 
 namespace gateway::zigbeemqtt::messages
 {
-enum class DeviceType: std::uint8_t
+enum class DeviceType : std::uint8_t
 {
     Coordinator,
     Router,

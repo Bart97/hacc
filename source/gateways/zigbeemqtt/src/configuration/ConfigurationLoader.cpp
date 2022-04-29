@@ -7,11 +7,10 @@ namespace
 {
 Configuration buildSnzb02Configuration()
 {
-    return {{"eWeLink", "TH01"},
-            {
-                {device::CapabilityType::Sensor, device::SensorType::Humidity, "humidity", std::nullopt},
-                {device::CapabilityType::Sensor, device::SensorType::Temperature, "temperature", std::nullopt}
-            }};
+    return {
+        {"eWeLink", "TH01"},
+        {{device::CapabilityType::Sensor, device::SensorType::Humidity, "humidity", std::nullopt},
+         {device::CapabilityType::Sensor, device::SensorType::Temperature, "temperature", std::nullopt}}};
 }
 } // namespace
 
@@ -21,7 +20,7 @@ ConfigurationLoader::ConfigurationLoader()
 }
 
 std::optional<Configuration> ConfigurationLoader::getConfiguration(
-        const std::string& manufacturer, const std::string& modelId)
+    const std::string& manufacturer, const std::string& modelId)
 try
 {
     return loadedConfigurations.at(DeviceIdentifier{manufacturer, modelId});

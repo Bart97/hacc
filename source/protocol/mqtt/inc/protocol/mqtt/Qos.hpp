@@ -3,7 +3,7 @@
 
 namespace protocol::mqtt
 {
-enum class Qos: std::uint8_t
+enum class Qos : std::uint8_t
 {
     AtMostOnce = 0,
     AtLeastOnce = 1,

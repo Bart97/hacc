@@ -15,8 +15,8 @@ public:
 
     void processMessages() override;
 
-    void publish(const std::string &string, const std::string &string1) override;
-    void subscribe(const std::string &string, PublishCallback callback) override;
+    void publish(const std::string& string, const std::string& string1) override;
+    void subscribe(const std::string& string, PublishCallback callback) override;
 
 private:
     void queuePublishedMessage(const PublishedMessage&);

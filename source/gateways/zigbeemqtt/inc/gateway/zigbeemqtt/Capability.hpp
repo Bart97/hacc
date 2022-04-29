@@ -24,4 +24,3 @@ private:
     double value;
 };
 } // namespace gateway::zigbeemqtt
-

@@ -1,7 +1,7 @@
 #include "protocol/mqtt/MqttWrapper.hpp"
-#include "spdlog/spdlog.h"
 #include <boost/throw_exception.hpp>
 #include <functional>
+#include "spdlog/spdlog.h"
 
 namespace
 {
@@ -23,7 +23,8 @@ MQTT_NS::qos convert(const protocol::mqtt::Qos qos)
 
 namespace protocol::mqtt
 {
-MqttWrapper::MqttWrapper(const std::string& id, const std::string& host, const std::uint16_t port) : ioContext()
+MqttWrapper::MqttWrapper(const std::string& id, const std::string& host, const std::uint16_t port)
+    : ioContext()
 {
     client = ::mqtt::make_sync_client(ioContext, host, port);
     client->set_client_id(id);
@@ -31,22 +32,25 @@ MqttWrapper::MqttWrapper(const std::string& id, const std::string& host, const s
     ::MQTT_NS::setup_log();
     // Create no TLS client
 
-    client->set_connack_handler([this] (bool, ::MQTT_NS::connect_return_code connack_return_code){
-                this->onConnected(connack_return_code);
-                return true;
-            });
-    client->set_close_handler([this] (){ this->onClosed(); });
-    client->set_error_handler([this] (::MQTT_NS::error_code ec){ this->onError(ec); });
-    client->set_publish_handler([this](auto packet_id, auto pubopts, auto topic, auto payload) {
-                this->onPublish(packet_id, pubopts, std::string{topic}, std::string{payload});
-                return true;
-            });
+    client->set_connack_handler(
+        [this](bool, ::MQTT_NS::connect_return_code connack_return_code)
+        {
+            this->onConnected(connack_return_code);
+            return true;
+        });
+    client->set_close_handler([this]() { this->onClosed(); });
+    client->set_error_handler([this](::MQTT_NS::error_code ec) { this->onError(ec); });
+    client->set_publish_handler(
+        [this](auto packet_id, auto pubopts, auto topic, auto payload)
+        {
+            this->onPublish(packet_id, pubopts, std::string{topic}, std::string{payload});
+            return true;
+        });
 
     // Connect
     client->connect();
 
-    contextThread = std::thread{[&ioContext = this->ioContext](){ioContext.run();}};
-
+    contextThread = std::thread{[&ioContext = this->ioContext]() { ioContext.run(); }};
 }
 
 MqttWrapper::~MqttWrapper()
@@ -64,8 +68,11 @@ void MqttWrapper::onConnected(::mqtt::connect_return_code connack_return_code)
     }
 }
 
-void MqttWrapper::onPublish(::mqtt::optional<PacketId> /*packetId*/,
-                       ::mqtt::publish_options /*pubopts*/, const std::string& topic, const std::string& payload)
+void MqttWrapper::onPublish(
+    ::mqtt::optional<PacketId> /*packetId*/,
+    ::mqtt::publish_options /*pubopts*/,
+    const std::string& topic,
+    const std::string& payload)
 {
     spdlog::debug("[MQTT] Received topic {}: {}", topic, payload);
     if (not publishCallback)
@@ -75,7 +82,7 @@ void MqttWrapper::onPublish(::mqtt::optional<PacketId> /*packetId*/,
     publishCallback({topic, payload});
 }
 
-void MqttWrapper::publish(const std::string &topic, const std::string &payload, const Qos qos)
+void MqttWrapper::publish(const std::string& topic, const std::string& payload, const Qos qos)
 {
     spdlog::debug("[MQTT] Publishing topic {}: {}", topic, payload);
     client->publish(topic, payload, convert(qos));

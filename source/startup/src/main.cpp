@@ -1,9 +1,9 @@
 #include <thread>
-#include "spdlog/spdlog.h"
-#include "protocol/mqtt/MqttWrapperFactory.hpp"
-#include "protocol/mqtt/MqttClient.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGateway.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGatewayFactory.hpp"
+#include "protocol/mqtt/MqttClient.hpp"
+#include "protocol/mqtt/MqttWrapperFactory.hpp"
+#include "spdlog/spdlog.h"
 
 namespace
 {

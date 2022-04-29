@@ -14,10 +14,10 @@ std::string sensorTypeToStr(const device::SensorType type)
 namespace gateway::zigbeemqtt
 {
 Capability::Capability(const configuration::CapabilityMapping& mapping)
-        : type(mapping.capabilityType),
-          sensorType(mapping.subtype),
-          jsonPath(mapping.jsonPath),
-          value(std::numeric_limits<double>::quiet_NaN())
+    : type(mapping.capabilityType)
+    , sensorType(mapping.subtype)
+    , jsonPath(mapping.jsonPath)
+    , value(std::numeric_limits<double>::quiet_NaN())
 {
     name = mapping.friendlyName.value_or(sensorTypeToStr(mapping.subtype));
 }

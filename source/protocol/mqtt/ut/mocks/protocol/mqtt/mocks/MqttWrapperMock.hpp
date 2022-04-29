@@ -4,7 +4,7 @@
 
 namespace protocol::mqtt
 {
-class MqttWrapperMock: public IMqttWrapper
+class MqttWrapperMock : public IMqttWrapper
 {
 public:
     MOCK_METHOD3(publish, void(const std::string&, const std::string&, Qos));

@@ -1,16 +1,15 @@
 #include "protocol/mqtt/MqttClient.hpp"
-#include "spdlog/spdlog.h"
 #include <algorithm>
 #include <boost/range.hpp>
 #include <ranges>
+#include "spdlog/spdlog.h"
 
 namespace protocol::mqtt
 {
-MqttClient::MqttClient(std::shared_ptr<IMqttWrapper> wrapper) : wrapper(std::move(wrapper))
+MqttClient::MqttClient(std::shared_ptr<IMqttWrapper> wrapper)
+    : wrapper(std::move(wrapper))
 {
-    this->wrapper->setPublishCallback([this](const PublishedMessage& msg) {
-        this->queuePublishedMessage(msg);
-    });
+    this->wrapper->setPublishCallback([this](const PublishedMessage& msg) { this->queuePublishedMessage(msg); });
 }
 
 void MqttClient::processMessages()
@@ -53,4 +52,3 @@ PublishedMessage MqttClient::popMessage()
     return msg;
 }
 } // namespace protocol::mqtt
-

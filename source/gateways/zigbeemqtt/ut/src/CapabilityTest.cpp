@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "gateway/zigbeemqtt/Capability.hpp"
+#include <gtest/gtest.h>
 #include "gateway/zigbeemqtt/mocks/DeviceFactoryMock.hpp"
 #include "protocol/mqtt/mocks/MqttClientMock.hpp"
 #include "spdlog/spdlog.h"
@@ -14,10 +14,7 @@ namespace gateway::zigbeemqtt
 namespace
 {
 const configuration::CapabilityMapping testMapping{
-        device::CapabilityType::Sensor,
-        device::SensorType::Pressure,
-        "testPath",
-        std::nullopt};
+    device::CapabilityType::Sensor, device::SensorType::Pressure, "testPath", std::nullopt};
 } // namespace
 
 class CapabilityTest : public Test

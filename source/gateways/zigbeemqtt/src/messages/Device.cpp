@@ -28,8 +28,7 @@ Device deserialize(const Json::Value& json)
         json["ieee_address"].asString(),
         json["manufacturer"].asString(),
         json["model_id"].asString(),
-        convert(json["type"].asString())
-    };
+        convert(json["type"].asString())};
 }
 } // namespace
 

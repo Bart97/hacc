@@ -5,11 +5,13 @@ namespace gateway::zigbeemqtt::messages
 {
 using namespace ::testing;
 
-class DeviceDeserializerTest: public Test
+class DeviceDeserializerTest : public Test
 {
 public:
-    const std::string json = R"([{"definition":null,"endpoints":{},"friendly_name":"Coordinator","ieee_address":"0x00124b000be86d99","interview_completed":true,"interviewing":false,"network_address":0,"supported":false,"type":"Coordinator"},{"date_code":"20201026","definition":{},"endpoints":{},"friendly_name":"0x00124b00245cf1ff","ieee_address":"0x00124b00245cf1ff","interview_completed":true,"interviewing":false,"manufacturer":"eWeLink","model_id":"TH01","network_address":64248,"power_source":"Battery","supported":true,"type":"EndDevice"},{"definition":{},"endpoints":{},"friendly_name":"Dummy","ieee_address":"0xDEADBEEF","interview_completed":true,"interviewing":false,"manufacturer":"Evil Corp","model_id":"Harambe","network_address":666,"power_source":"Battery","supported":true,"type":"Router"}])";
-    const std::string jsonWithWrongType = R"([{"definition":null,"endpoints":{},"friendly_name":"Coordinator","ieee_address":"0x00124b000be86d99","interview_completed":true,"interviewing":false,"network_address":0,"supported":false,"type":"WRONGTYPEHERE"}])";
+    const std::string json
+        = R"([{"definition":null,"endpoints":{},"friendly_name":"Coordinator","ieee_address":"0x00124b000be86d99","interview_completed":true,"interviewing":false,"network_address":0,"supported":false,"type":"Coordinator"},{"date_code":"20201026","definition":{},"endpoints":{},"friendly_name":"0x00124b00245cf1ff","ieee_address":"0x00124b00245cf1ff","interview_completed":true,"interviewing":false,"manufacturer":"eWeLink","model_id":"TH01","network_address":64248,"power_source":"Battery","supported":true,"type":"EndDevice"},{"definition":{},"endpoints":{},"friendly_name":"Dummy","ieee_address":"0xDEADBEEF","interview_completed":true,"interviewing":false,"manufacturer":"Evil Corp","model_id":"Harambe","network_address":666,"power_source":"Battery","supported":true,"type":"Router"}])";
+    const std::string jsonWithWrongType
+        = R"([{"definition":null,"endpoints":{},"friendly_name":"Coordinator","ieee_address":"0x00124b000be86d99","interview_completed":true,"interviewing":false,"network_address":0,"supported":false,"type":"WRONGTYPEHERE"}])";
 };
 
 TEST_F(DeviceDeserializerTest, ShouldDeserializeAllEntries)

@@ -3,7 +3,7 @@
 namespace gateway::zigbeemqtt::configuration
 {
 
-bool DeviceIdentifier::operator== (const DeviceIdentifier& other) const
+bool DeviceIdentifier::operator==(const DeviceIdentifier& other) const
 {
     return std::tie(manufacturer, modelId) == std::tie(other.manufacturer, other.modelId);
 }

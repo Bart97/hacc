@@ -1,16 +1,17 @@
 #include "gateway/zigbeemqtt/ZigbeeDevice.hpp"
-#include "spdlog/spdlog.h"
 #include "gateway/zigbeemqtt/Capability.hpp"
+#include "spdlog/spdlog.h"
 
 namespace gateway::zigbeemqtt
 {
 ZigbeeDevice::ZigbeeDevice(
-        const messages::Device& deviceInfo,
-        const configuration::Configuration& config,
-        std::shared_ptr<protocol::mqtt::IMqttClient> _mqttClient)
-        : ieeeAddress{deviceInfo.ieeeAddress}, mqttClient{std::move(_mqttClient)}
+    const messages::Device& deviceInfo,
+    const configuration::Configuration& config,
+    std::shared_ptr<protocol::mqtt::IMqttClient> _mqttClient)
+    : ieeeAddress{deviceInfo.ieeeAddress}
+    , mqttClient{std::move(_mqttClient)}
 {
-    for (const auto& configuredCapability: config.capabilityMappings)
+    for (const auto& configuredCapability : config.capabilityMappings)
     {
         capabilities.emplace_back(std::make_shared<Capability>(configuredCapability));
     }
@@ -43,4 +44,3 @@ const std::vector<std::shared_ptr<device::ICapability>>& ZigbeeDevice::getCapabi
     return capabilities;
 }
 } // namespace gateway::zigbeemqtt
-

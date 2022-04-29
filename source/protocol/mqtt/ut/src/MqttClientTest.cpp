@@ -1,12 +1,12 @@
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include "protocol/mqtt/MqttClient.hpp"
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 #include "protocol/mqtt/mocks/MqttWrapperMock.hpp"
 
 using namespace ::testing;
 namespace protocol::mqtt
 {
-class MqttClientTest: public Test
+class MqttClientTest : public Test
 {
 public:
     MqttClientTest()

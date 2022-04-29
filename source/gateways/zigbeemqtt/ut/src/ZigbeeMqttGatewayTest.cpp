@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "gateway/zigbeemqtt/ZigbeeMqttGateway.hpp"
+#include <gtest/gtest.h>
 #include "gateway/zigbeemqtt/mocks/DeviceFactoryMock.hpp"
 #include "protocol/mqtt/mocks/MqttClientMock.hpp"
 
@@ -8,19 +8,15 @@ using protocol::mqtt::MqttClientMock;
 
 namespace gateway::zigbeemqtt
 {
-class ZigbeeMqttGatewayTest: public Test
+class ZigbeeMqttGatewayTest : public Test
 {
 public:
-    ZigbeeMqttGatewayTest()
-    {
+    ZigbeeMqttGatewayTest() { }
 
-    }
-
-    std::unique_ptr<StrictMock<DeviceFactoryMock>> deviceFactoryMockPtr =
-            std::make_unique<StrictMock<DeviceFactoryMock>>();
+    std::unique_ptr<StrictMock<DeviceFactoryMock>> deviceFactoryMockPtr
+        = std::make_unique<StrictMock<DeviceFactoryMock>>();
     StrictMock<DeviceFactoryMock>* deviceFactoryMock = deviceFactoryMockPtr.get();
-    std::shared_ptr<StrictMock<MqttClientMock>> mqttClientMockPtr =
-            std::make_shared<StrictMock<MqttClientMock>>();
+    std::shared_ptr<StrictMock<MqttClientMock>> mqttClientMockPtr = std::make_shared<StrictMock<MqttClientMock>>();
     StrictMock<MqttClientMock>* mqttClientMock = mqttClientMockPtr.get();
 };
 

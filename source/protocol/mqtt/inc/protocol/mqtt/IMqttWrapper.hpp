@@ -14,4 +14,3 @@ public:
     virtual void setPublishCallback(PublishCallback) = 0;
 };
 } // namespace protocol::mqtt
-
