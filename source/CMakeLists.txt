@@ -1,3 +1,4 @@
+add_subdirectory(event)
 add_subdirectory(gateways)
 add_subdirectory(itf)
 add_subdirectory(protocol)

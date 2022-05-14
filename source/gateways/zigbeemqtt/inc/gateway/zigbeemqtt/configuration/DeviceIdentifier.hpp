@@ -17,7 +17,8 @@ struct DeviceIdentifier
 std::ostream& operator<<(std::ostream& os, const DeviceIdentifier& identifier);
 } // namespace gateway::zigbeemqtt::configuration
 
-template <> struct std::hash<gateway::zigbeemqtt::configuration::DeviceIdentifier>
+template<>
+struct std::hash<gateway::zigbeemqtt::configuration::DeviceIdentifier>
 {
     std::size_t operator()(gateway::zigbeemqtt::configuration::DeviceIdentifier const& identifier) const noexcept
     {
