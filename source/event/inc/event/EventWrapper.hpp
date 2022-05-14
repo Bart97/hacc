@@ -1,5 +1,6 @@
 #pragma once
 #include <boost/type_index.hpp>
+#include "event/EventUidGenerator.hpp"
 #include "event/IEventWrapper.hpp"
 
 namespace event
@@ -24,7 +25,7 @@ public:
 
     EventUID getUID() const override
     {
-        return typeid(ev).hash_code();
+        return generateEventUID<EventType>();
     }
 
     EventType& getEvent()

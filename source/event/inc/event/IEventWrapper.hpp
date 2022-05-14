@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
+#include "event/EventUID.hpp"
 
 namespace event
 {
-using EventUID = std::size_t;
 class IEventWrapper
 {
 public:

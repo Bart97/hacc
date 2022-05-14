@@ -2,6 +2,7 @@
 #include <boost/pointer_cast.hpp>
 #include <functional>
 #include "event/EventCallback.hpp"
+#include "event/EventUidGenerator.hpp"
 #include "event/EventWrapper.hpp"
 #include "event/IEventCallbackWrapper.hpp"
 
@@ -24,7 +25,7 @@ public:
 
     EventUID getEventUID() override
     {
-        return typeid(EventType).hash_code(); // TODO: Extract duplicated code
+        return generateEventUID<EventType>();
     }
 
 private:
