@@ -1,8 +1,9 @@
 set(TEST_SOURCES
+    inc/TestEvent.hpp
     src/EventCallbackWrapperTest.cpp
     src/EventDispatcherTest.cpp
-    src/EventWrapperTest.cpp
-    inc/TestEvent.hpp)
+    src/EventQueueTest.cpp
+    src/EventWrapperTest.cpp)
 
 add_executable(${TARGET_NAME}_ut ${TEST_SOURCES})
 target_link_libraries(${TARGET_NAME}_ut

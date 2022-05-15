@@ -1,15 +1,18 @@
 SET(TARGET_NAME event)
 set(TARGET_SOURCES
-    src/EventDispatcher.cpp)
+    src/EventDispatcher.cpp
+    src/EventQueue.cpp)
 set(TARGET_HEADERS
     inc/event/EventCallbackWrapper.hpp
     inc/event/EventDispatcher.hpp
     inc/event/EventWrapper.hpp
     inc/event/IEventDispatcher.hpp
+    inc/event/IEventQueue.hpp
     inc/event/IEventWrapper.hpp
     inc/event/IEventCallbackWrapper.hpp
     inc/event/EventCallbackWrapperFactory.hpp
     inc/event/EventCallback.hpp
+    inc/event/EventQueue.hpp
     inc/event/EventUidGenerator.hpp
     inc/event/EventUID.hpp)
 
