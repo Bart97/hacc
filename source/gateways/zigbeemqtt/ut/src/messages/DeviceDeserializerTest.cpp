@@ -69,4 +69,4 @@ TEST_F(DeviceDeserializerTest, ShouldThrowOnEntryWithWrongType)
 {
     EXPECT_THROW(deserializeDevices(jsonWithWrongType), std::runtime_error);
 }
-} // namespace gateway::zigbeemqtt
+} // namespace gateway::zigbeemqtt::messages
