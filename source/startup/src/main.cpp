@@ -1,4 +1,6 @@
 #include <thread>
+#include "event/EventDispatcher.hpp"
+#include "event/EventQueue.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGateway.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGatewayFactory.hpp"
 #include "protocol/mqtt/MqttClient.hpp"
@@ -15,15 +17,18 @@ int main()
 {
     spdlog::set_level(spdlog::level::debug);
     spdlog::info("Hello world!");
+
+    event::EventQueue eventQueue{};
+    event::EventDispatcher eventDispatcher{};
+
     auto mqttWrapper = protocol::mqtt::createMqttWrapper("hacc", mqttHost, mqttPort);
-    auto mqttClient = std::make_shared<protocol::mqtt::MqttClient>(mqttWrapper);
+    auto mqttClient = std::make_shared<protocol::mqtt::MqttClient>(mqttWrapper, eventDispatcher, eventQueue);
 
     auto zigbeeGateway = gateway::zigbeemqtt::createZigbeeMqttGateway(mqttClient);
 
     while (true)
     {
-        mqttClient->processMessages();
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        eventDispatcher.dispatch(eventQueue.waitAndPop());
     }
 
     return 0;

@@ -5,6 +5,7 @@ add_executable(${TARGET_NAME}_ut ${TEST_SOURCES})
 target_link_libraries(${TARGET_NAME}_ut
     ${TARGET_NAME}
     ${TARGET_NAME}_mock
+    event_mock
     gtest_main
     gmock)
 
@@ -13,4 +14,4 @@ set(MOCKS
 
 add_library(${TARGET_NAME}_mock INTERFACE ${MOCKS})
 target_include_directories(${TARGET_NAME}_mock INTERFACE mocks)
-target_link_libraries(${TARGET_NAME}_mock INTERFACE ${TARGET_NAME} gmock )
+target_link_libraries(${TARGET_NAME}_mock INTERFACE ${TARGET_NAME} gmock)

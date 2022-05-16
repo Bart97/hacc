@@ -2,27 +2,32 @@
 #include <algorithm>
 #include <boost/range.hpp>
 #include <ranges>
+#include "event/EventCallbackWrapperFactory.hpp"
+#include "event/EventWrapperFactory.hpp"
+#include "event/IEventDispatcher.hpp"
+#include "event/IEventQueue.hpp"
+#include "protocol/mqtt/events/MqttMessagePublishedEvent.hpp"
 #include "spdlog/spdlog.h"
 
 namespace protocol::mqtt
 {
-MqttClient::MqttClient(std::shared_ptr<IMqttWrapper> wrapper)
+MqttClient::MqttClient(
+    std::shared_ptr<IMqttWrapper> wrapper, event::IEventDispatcher& dispatcher, event::IEventQueue& queue)
     : wrapper(std::move(wrapper))
+    , eventDispatcher(dispatcher)
 {
-    this->wrapper->setPublishCallback([this](const PublishedMessage& msg) { this->queuePublishedMessage(msg); });
+    eventDispatcher.subscribe(event::createEventCallbackWrapper<events::MqttMessagePublishedEvent>(
+        [this](const auto& ev) { processMessage(ev.message); }));
+    this->wrapper->setPublishCallback([&queue](const PublishedMessage& msg)
+                                      { queue.push(event::createEvent(events::MqttMessagePublishedEvent{msg})); });
 }
 
-void MqttClient::processMessages()
+void MqttClient::processMessage(const PublishedMessage& msg)
 {
-    while (!messageQueue.empty())
+    auto [begin, end] = callbackMap.equal_range(msg.topic);
+    for (const auto& [_, callback] : boost::make_iterator_range(begin, end))
     {
-        auto msg = popMessage();
-
-        auto [begin, end] = callbackMap.equal_range(msg.topic);
-        for (const auto& [_, callback] : boost::make_iterator_range(begin, end))
-        {
-            callback(msg);
-        }
+        callback(msg);
     }
 }
 
@@ -36,19 +41,5 @@ void MqttClient::subscribe(const std::string& topic, PublishCallback callback)
     spdlog::debug("[MQTT] Subscribing to topic {}", topic);
     callbackMap.insert({topic, std::move(callback)});
     wrapper->subscribe(topic, Qos::ExactlyOnce);
-}
-
-void MqttClient::queuePublishedMessage(const PublishedMessage& msg)
-{
-    std::scoped_lock guard(queueMutex);
-    messageQueue.push(msg);
-}
-
-PublishedMessage MqttClient::popMessage()
-{
-    std::scoped_lock guard(queueMutex);
-    PublishedMessage msg = messageQueue.front();
-    messageQueue.pop();
-    return msg;
 }
 } // namespace protocol::mqtt

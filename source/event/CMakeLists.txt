@@ -6,6 +6,7 @@ set(TARGET_HEADERS
     inc/event/EventCallbackWrapper.hpp
     inc/event/EventDispatcher.hpp
     inc/event/EventWrapper.hpp
+    inc/event/EventWrapperFactory.hpp
     inc/event/IEventDispatcher.hpp
     inc/event/IEventQueue.hpp
     inc/event/IEventWrapper.hpp
