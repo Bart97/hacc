@@ -4,7 +4,7 @@
 #include "event/EventDispatcherMock.hpp"
 #include "event/EventQueueMock.hpp"
 #include "event/EventWrapperFactory.hpp"
-#include "protocol/mqtt/event/MqttMessagePublishedEvent.hpp"
+#include "protocol/mqtt/events/MqttMessagePublishedEvent.hpp"
 #include "protocol/mqtt/mocks/MqttWrapperMock.hpp"
 
 using namespace ::testing;

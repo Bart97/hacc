@@ -7,9 +7,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 
-enable_testing()
-
 add_subdirectory(deps)
+
+include(cmake/testing.cmake)
+
 add_subdirectory(source)
 
 #SET(Boost_USE_STATIC_LIBS ON)
