@@ -8,4 +8,7 @@ target_link_libraries(startup PUBLIC
     spdlog::spdlog
     event
     mqtt
+    core
+    metrics
+    timer
     zigbeemqtt)

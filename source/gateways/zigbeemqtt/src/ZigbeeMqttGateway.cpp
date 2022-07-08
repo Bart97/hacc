@@ -1,5 +1,6 @@
 #include "gateway/zigbeemqtt/ZigbeeMqttGateway.hpp"
 
+#include <boost/range/adaptor/transformed.hpp>
 #include <json/json.h>
 #include "spdlog/spdlog.h"
 
@@ -28,6 +29,13 @@ std::shared_ptr<device::IDevice> ZigbeeMqttGateway::getDeviceByName(const std::s
 {
     (void)string;
     return nullptr;
+}
+
+device::DeviceRange ZigbeeMqttGateway::getAllDevices()
+{
+    return devices
+        | boost::adaptors::transformed([](const auto& item)
+                                       { return std::static_pointer_cast<device::IDevice>(item); });
 }
 
 void ZigbeeMqttGateway::onConfigurationChanged(const messages::Devices& newDevices)

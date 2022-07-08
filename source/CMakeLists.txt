@@ -1,6 +1,8 @@
+add_subdirectory(core)
 add_subdirectory(event)
 add_subdirectory(gateways)
 add_subdirectory(itf)
 add_subdirectory(protocol)
+add_subdirectory(services)
 add_subdirectory(startup)
 add_subdirectory(timer)

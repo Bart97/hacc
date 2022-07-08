@@ -20,13 +20,13 @@ public:
 
     bool isPresent() override;
 
-    const std::vector<std::shared_ptr<device::ICapability>>& getCapabilities() const;
+    const device::Capabilities& getCapabilities() const override;
 
 private:
     void onUpdate(const protocol::mqtt::PublishedMessage&);
 
     std::string ieeeAddress;
     std::shared_ptr<protocol::mqtt::IMqttClient> mqttClient;
-    std::vector<std::shared_ptr<device::ICapability>> capabilities;
+    device::Capabilities capabilities;
 };
 } // namespace gateway::zigbeemqtt

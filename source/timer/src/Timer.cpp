@@ -9,10 +9,10 @@ namespace timer
 Timer::Timer(TimerCallback callback, std::chrono::milliseconds duration, event::IEventQueue& eventQueue)
 {
     std::thread(
-        [&callback, duration, &eventQueue]()
+        [callback, duration, &eventQueue]()
         {
             std::this_thread::sleep_for(duration);
-            eventQueue.push(event::createEvent(events::TimerExpiredEvent{std::move(callback)}));
+            eventQueue.push(event::createEvent(events::TimerExpiredEvent{callback}));
         })
         .detach();
 }

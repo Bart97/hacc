@@ -39,7 +39,7 @@ void ZigbeeDevice::onUpdate(const protocol::mqtt::PublishedMessage& msg)
     }
 }
 
-const std::vector<std::shared_ptr<device::ICapability>>& ZigbeeDevice::getCapabilities() const
+const device::Capabilities& ZigbeeDevice::getCapabilities() const
 {
     return capabilities;
 }

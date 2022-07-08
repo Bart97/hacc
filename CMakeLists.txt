@@ -4,7 +4,9 @@ project(HACC CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #SET(CMAKE_VERBOSE_MAKEFILE ON)
-
+set(MQTT_BUILD_TESTS OFF)
+set(MQTT_BUILD_EXAMPLES OFF)
+enable_testing()
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 
 add_subdirectory(deps)

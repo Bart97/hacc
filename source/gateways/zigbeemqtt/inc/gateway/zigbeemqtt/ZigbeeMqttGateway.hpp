@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "device/DeviceRange.hpp"
 #include "gateway/zigbeemqtt/IDeviceFactory.hpp"
 #include "gateway/zigbeemqtt/ZigbeeDevice.hpp"
 #include "gateway/zigbeemqtt/messages/Device.hpp"
@@ -15,6 +16,7 @@ public:
 
     std::shared_ptr<device::IDevice> getDeviceById() override;
     std::shared_ptr<device::IDevice> getDeviceByName(const std::string& string) override;
+    device::DeviceRange getAllDevices() override;
 
 private:
     void onConfigurationChanged(const messages::Devices& newDevices);

@@ -1,10 +1,7 @@
 #pragma once
 #include <string>
-
-namespace device
-{
-class IDevice;
-} // namespace device
+#include <vector>
+#include "device/DeviceRange.hpp"
 
 namespace gateway
 {
@@ -15,5 +12,6 @@ public:
 
     virtual std::shared_ptr<device::IDevice> getDeviceById() = 0;
     virtual std::shared_ptr<device::IDevice> getDeviceByName(const std::string&) = 0;
+    virtual device::DeviceRange getAllDevices() = 0;
 };
 } // namespace gateway

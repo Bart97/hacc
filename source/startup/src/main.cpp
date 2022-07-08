@@ -1,11 +1,14 @@
 #include <thread>
+#include "core/DeviceManager.hpp"
 #include "event/EventDispatcher.hpp"
 #include "event/EventQueue.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGateway.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGatewayFactory.hpp"
 #include "protocol/mqtt/MqttClient.hpp"
 #include "protocol/mqtt/MqttWrapperFactory.hpp"
+#include "services/metrics/MetricsService.hpp"
 #include "spdlog/spdlog.h"
+#include "timer/TimerManager.hpp"
 
 namespace
 {
@@ -21,10 +24,14 @@ int main()
     event::EventQueue eventQueue{};
     event::EventDispatcher eventDispatcher{};
 
+    timer::TimerManager timerManager{eventQueue, eventDispatcher};
+
     auto mqttWrapper = protocol::mqtt::createMqttWrapper("hacc", mqttHost, mqttPort);
     auto mqttClient = std::make_shared<protocol::mqtt::MqttClient>(mqttWrapper, eventDispatcher, eventQueue);
 
-    auto zigbeeGateway = gateway::zigbeemqtt::createZigbeeMqttGateway(mqttClient);
+    core::DeviceManager deviceManager{};
+    deviceManager.addGateway(gateway::zigbeemqtt::createZigbeeMqttGateway(mqttClient));
+    metrics::MetricsService metricsService{timerManager, deviceManager};
 
     while (true)
     {
