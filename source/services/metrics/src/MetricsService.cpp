@@ -18,9 +18,13 @@ bool shouldStoreSensor(const device::SensorType sensorType)
 
 namespace metrics
 {
-MetricsService::MetricsService(timer::ITimerManager& timerManager, core::IDeviceManager& deviceManager)
+MetricsService::MetricsService(
+    timer::ITimerManager& timerManager,
+    core::IDeviceManager& deviceManager,
+    protocol::metrics::IMetricsServer& metricsServer)
     : timerManager(timerManager)
     , deviceManager(deviceManager)
+    , metricsServer(metricsServer)
 {
     updateTimer = this->timerManager.createTimer([this]() { this->update(); }, updateInterval);
 }
@@ -29,6 +33,7 @@ void MetricsService::update()
 {
     if (updateTimer)
         spdlog::info("timer");
+    protocol::metrics::Entries entries;
     for (const auto device : deviceManager.getAllDevices())
     {
         if (!device or !device->isPresent())
@@ -46,8 +51,10 @@ void MetricsService::update()
                     device->getIdentifier(),
                     capability->getName(),
                     capability->getValue());
+                entries.emplace_back(protocol::metrics::Entry{capability->getName(), capability->getValue()});
             }
         }
     }
+    metricsServer.store(entries);
 }
 } // namespace metrics

@@ -4,6 +4,7 @@
 #include "event/EventQueue.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGateway.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGatewayFactory.hpp"
+#include "protocol/metrics/DummyMetricsServer.hpp"
 #include "protocol/mqtt/MqttClient.hpp"
 #include "protocol/mqtt/MqttWrapperFactory.hpp"
 #include "services/metrics/MetricsService.hpp"
@@ -31,7 +32,8 @@ int main()
 
     core::DeviceManager deviceManager{};
     deviceManager.addGateway(gateway::zigbeemqtt::createZigbeeMqttGateway(mqttClient));
-    metrics::MetricsService metricsService{timerManager, deviceManager};
+    protocol::metrics::DummyMetricsServer metricsServer{};
+    metrics::MetricsService metricsService{timerManager, deviceManager, metricsServer};
 
     while (true)
     {

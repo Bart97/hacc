@@ -4,3 +4,6 @@
 [submodule "deps/spdlog"]
 	path = deps/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "deps/influxdb-cxx"]
+	path = deps/influxdb-cxx
+	url = https://github.com/Bart97/influxdb-cxx.git

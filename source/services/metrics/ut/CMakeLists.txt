@@ -9,6 +9,7 @@ target_link_libraries(${TARGET_NAME}_ut
     ${TARGET_NAME}
     itf_mock
     timer_mock
+    protocol_metrics_interface_mock
     gtest_main
     gmock)
 

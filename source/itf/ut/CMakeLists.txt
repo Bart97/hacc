@@ -1,4 +1,5 @@
 set(MOCKS
+    mocks/device/CapabilityMock.hpp
     mocks/device/DeviceMock.hpp
     mocks/itf/DeviceManagerMock.hpp
     mocks/itf/GatewayMock.hpp)

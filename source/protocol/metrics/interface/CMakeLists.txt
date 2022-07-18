@@ -1,15 +1,16 @@
-SET(TARGET_NAME metrics)
+SET(TARGET_NAME protocol_metrics_interface)
 set(TARGET_SOURCES
-    src/MetricsService.cpp)
+    src/Entry.cpp
+    src/DummyMetricsServer.cpp)
 set(TARGET_HEADERS
-    inc/services/metrics/MetricsService.hpp)
+    inc/protocol/metrics/DummyMetricsServer.hpp
+    inc/protocol/metrics/Entry.hpp
+    inc/protocol/metrics/IMetricsServer.hpp)
 
 add_library(${TARGET_NAME} ${TARGET_SOURCES} ${TARGET_HEADERS})
 target_link_libraries(${TARGET_NAME}
     PUBLIC
     itf
-    timer
-    protocol_metrics_interface
     spdlog::spdlog)
 target_include_directories(${TARGET_NAME} PUBLIC inc)
 
