@@ -11,5 +11,6 @@ target_link_libraries(startup PUBLIC
     config
     core
     metrics
+    protocol_metrics_influxdb
     timer
     zigbeemqtt)

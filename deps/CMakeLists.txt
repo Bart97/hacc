@@ -6,3 +6,6 @@ add_subdirectory(spdlog)
 set(MQTT_BUILD_TESTS OFF)
 set(MQTT_BUILD_EXAMPLES OFF)
 add_subdirectory(mqtt_cpp)
+
+set(INFLUXCXX_TESTING OFF)
+add_subdirectory(influxdb-cxx)

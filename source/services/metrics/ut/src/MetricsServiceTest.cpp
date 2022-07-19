@@ -38,7 +38,8 @@ public:
 
     StrictMock<timer::TimerManagerMock> timerManagerMock;
     NiceMock<core::DeviceManagerMock> deviceManagerMock;
-    NiceMock<protocol::metrics::MetricsServerMock> metricsServerMock;
+    std::shared_ptr<NiceMock<protocol::metrics::MetricsServerMock>> metricsServerMock{
+        std::make_shared<NiceMock<protocol::metrics::MetricsServerMock>>()};
 
     timer::TimerCallback timerCallback;
 };
@@ -53,7 +54,7 @@ TEST_F(MetricsServiceTest, shouldCallStoreOnceWhenTimerExpired)
 {
     storeTimerCallback();
     MetricsService sut{timerManagerMock, deviceManagerMock, metricsServerMock};
-    EXPECT_CALL(metricsServerMock, store(_)).Times(1);
+    EXPECT_CALL(*metricsServerMock, store(_)).Times(1);
     EXPECT_CALL(deviceManagerMock, getAllDevices()).WillRepeatedly(Return(device::DeviceRange{}));
     timerCallback();
 }
@@ -79,7 +80,7 @@ TEST_F(MetricsServiceTest, shouldAddAllSensorValuesToEntriesListForSingleDevice)
     MetricsService sut{timerManagerMock, deviceManagerMock, metricsServerMock};
 
     EXPECT_CALL(
-        metricsServerMock,
+        *metricsServerMock,
         store(UnorderedElementsAre(Entry{capability1Name, capability1value}, Entry{capability2Name, capability2value})))
         .Times(1);
     EXPECT_CALL(deviceManagerMock, getAllDevices()).WillRepeatedly(Return(devicesList));

@@ -11,6 +11,7 @@ struct Entry
 {
     using Value = std::variant<std::string, double>;
     std::string name;
+    std::string device;
     Value value;
 
     bool operator==(const protocol::metrics::Entry&) const;

@@ -21,10 +21,10 @@ namespace metrics
 MetricsService::MetricsService(
     timer::ITimerManager& timerManager,
     core::IDeviceManager& deviceManager,
-    protocol::metrics::IMetricsServer& metricsServer)
+    std::shared_ptr<protocol::metrics::IMetricsServer> metricsServer)
     : timerManager(timerManager)
     , deviceManager(deviceManager)
-    , metricsServer(metricsServer)
+    , metricsServer(std::move(metricsServer))
 {
     updateTimer = this->timerManager.createRecurringTimer([this]() { this->update(); }, updateInterval);
 }
@@ -44,15 +44,20 @@ void MetricsService::update()
         {
             if (capability->getType() == device::CapabilityType::Sensor and shouldStoreSensor(capability->getSubType()))
             {
+                auto value = capability->getValue();
+                if (std::isnan(value))
+                {
+                    continue;
+                }
                 spdlog::info(
                     "Logging sensor value: sensor={} name={} value={}",
                     device->getIdentifier(),
                     capability->getName(),
-                    capability->getValue());
-                entries.emplace_back(protocol::metrics::Entry{capability->getName(), capability->getValue()});
+                    value);
+                entries.emplace_back(protocol::metrics::Entry{capability->getName(), device->getIdentifier(), value});
             }
         }
     }
-    metricsServer.store(entries);
+    metricsServer->store(entries);
 }
 } // namespace metrics

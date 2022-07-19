@@ -14,12 +14,12 @@ template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
 bool Entry::operator==(const protocol::metrics::Entry& b) const
 {
-    return std::tie(name, value) == std::tie(b.name, b.value);
+    return std::tie(name, device, value) == std::tie(b.name, b.device, b.value);
 }
 
 std::ostream& operator<<(std::ostream& os, const Entry& in)
 {
-    os << R"({"name": ")" << in.name << R"(", "value": )";
+    os << R"({"name": ")" << in.name << R"(", "device": ")" << in.device << R"(" "value": )";
 
     std::visit(
         overloaded{[&os](const double v) { os << v; }, [&os](const std::string& v) { os << '"' << v << '"'; }},
