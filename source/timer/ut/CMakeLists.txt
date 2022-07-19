@@ -1,4 +1,5 @@
 set(TEST_SOURCES
+    src/RecurringTimerTest.cpp
     src/TimerManagerTest.cpp
     src/TimerTest.cpp)
 

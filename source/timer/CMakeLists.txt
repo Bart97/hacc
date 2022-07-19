@@ -1,10 +1,12 @@
 SET(TARGET_NAME timer)
 SET(TARGET_SOURCES
+    src/RecurringTimer.cpp
     src/Timer.cpp
     src/TimerManager.cpp)
 SET(TARGET_HEADERS
     inc/timer/ITimer.hpp
     inc/timer/ITimerManager.hpp
+    inc/timer/RecurringTimer.hpp
     inc/timer/Timer.hpp
     inc/timer/TimerCallback.hpp
     inc/timer/TimerManager.hpp

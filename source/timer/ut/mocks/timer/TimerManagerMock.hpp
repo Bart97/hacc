@@ -8,5 +8,7 @@ class TimerManagerMock : public ITimerManager
 {
 public:
     MOCK_METHOD2(createTimer, std::unique_ptr<ITimer>(TimerCallback callback, std::chrono::milliseconds duration));
+    MOCK_METHOD2(
+        createRecurringTimer, std::unique_ptr<ITimer>(TimerCallback callback, std::chrono::milliseconds duration));
 };
 } // namespace timer
