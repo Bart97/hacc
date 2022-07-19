@@ -26,7 +26,7 @@ MetricsService::MetricsService(
     , deviceManager(deviceManager)
     , metricsServer(metricsServer)
 {
-    updateTimer = this->timerManager.createTimer([this]() { this->update(); }, updateInterval);
+    updateTimer = this->timerManager.createRecurringTimer([this]() { this->update(); }, updateInterval);
 }
 
 void MetricsService::update()

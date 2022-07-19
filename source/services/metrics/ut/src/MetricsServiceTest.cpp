@@ -15,7 +15,7 @@ class MetricsServiceTest : public Test
 public:
     void storeTimerCallback()
     {
-        EXPECT_CALL(timerManagerMock, createTimer(_, _))
+        EXPECT_CALL(timerManagerMock, createRecurringTimer(_, _))
             .WillOnce(
                 [&](auto arg, auto)
                 {
@@ -45,7 +45,7 @@ public:
 
 TEST_F(MetricsServiceTest, shouldStartTimerWhenCreated)
 {
-    EXPECT_CALL(timerManagerMock, createTimer(_, _)).Times(1);
+    EXPECT_CALL(timerManagerMock, createRecurringTimer(_, _)).Times(1);
     MetricsService sut{timerManagerMock, deviceManagerMock, metricsServerMock};
 }
 
