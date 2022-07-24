@@ -15,7 +15,7 @@ SET(TARGET_HEADERS
     inc/protocol/mqtt/Qos.hpp
     inc/protocol/mqtt/events/MqttMessagePublishedEvent.hpp)
 
-add_library(${TARGET_NAME} ${TARGET_SOURCES} ${TARGET_HEADERS})
+add_library(${TARGET_NAME} STATIC ${TARGET_SOURCES} ${TARGET_HEADERS})
 target_include_directories(${TARGET_NAME} PUBLIC inc)
 
 #find_package(mqtt_cpp_iface REQUIRED)

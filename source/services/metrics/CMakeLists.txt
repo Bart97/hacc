@@ -4,7 +4,7 @@ set(TARGET_SOURCES
 set(TARGET_HEADERS
     inc/services/metrics/MetricsService.hpp)
 
-add_library(${TARGET_NAME} ${TARGET_SOURCES} ${TARGET_HEADERS})
+add_library(${TARGET_NAME} STATIC ${TARGET_SOURCES} ${TARGET_HEADERS})
 target_link_libraries(${TARGET_NAME}
     PUBLIC
     itf

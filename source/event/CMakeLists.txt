@@ -17,7 +17,7 @@ set(TARGET_HEADERS
     inc/event/EventUidGenerator.hpp
     inc/event/EventUID.hpp)
 
-add_library(${TARGET_NAME} ${TARGET_SOURCES} ${TARGET_HEADERS})
+add_library(${TARGET_NAME} STATIC ${TARGET_SOURCES} ${TARGET_HEADERS})
 target_link_libraries(${TARGET_NAME}
     PUBLIC
     itf

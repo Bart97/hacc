@@ -12,7 +12,7 @@ set(TARGET_SOURCES
     src/device/CapabilityType.cpp
     src/device/SensorType.cpp)
 
-add_library(${TARGET_NAME} ${TARGET_HEADERS} ${TARGET_SOURCES})
+add_library(${TARGET_NAME} STATIC ${TARGET_HEADERS} ${TARGET_SOURCES})
 target_include_directories(${TARGET_NAME} PUBLIC inc)
 
 add_subdirectory(ut)
