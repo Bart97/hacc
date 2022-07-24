@@ -31,8 +31,6 @@ MetricsService::MetricsService(
 
 void MetricsService::update()
 {
-    if (updateTimer)
-        spdlog::info("timer");
     protocol::metrics::Entries entries;
     for (const auto device : deviceManager.getAllDevices())
     {
