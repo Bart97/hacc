@@ -8,6 +8,7 @@ target_link_libraries(startup PUBLIC
     spdlog::spdlog
     event
     mqtt
+    config
     core
     metrics
     timer

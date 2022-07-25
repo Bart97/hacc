@@ -1,0 +1,7 @@
+{
+  "zigbee2mqtt":
+  {
+    "hostname": "mqtt.local",
+    "port": 1883
+  }
+}

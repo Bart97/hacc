@@ -1,4 +1,5 @@
 #include <thread>
+#include "config/ConfigFile.hpp"
 #include "core/DeviceManager.hpp"
 #include "event/EventDispatcher.hpp"
 #include "event/EventQueue.hpp"
@@ -13,21 +14,35 @@
 
 namespace
 {
-const std::string mqttHost = "10.0.1.168";
-constexpr std::uint16_t mqttPort = 1883;
+std::string getConfigFilename(const int argc, const char* argv[])
+{
+    const std::string defaultConfigFile{"config.json"};
+
+    if (argc > 1)
+    {
+        return argv[1];
+    }
+
+    return defaultConfigFile;
+}
 } // namespace
 
-int main()
+int main(const int argc, const char* argv[])
 {
     spdlog::set_level(spdlog::level::debug);
     spdlog::info("Hello world!");
+
+    const std::string configFilename{getConfigFilename(argc, argv)};
+    spdlog::info("Using {} as configuration", configFilename);
+    config::ConfigFile config{configFilename};
 
     event::EventQueue eventQueue{};
     event::EventDispatcher eventDispatcher{};
 
     timer::TimerManager timerManager{eventQueue, eventDispatcher};
 
-    auto mqttWrapper = protocol::mqtt::createMqttWrapper("hacc", mqttHost, mqttPort);
+    auto mqttWrapper = protocol::mqtt::createMqttWrapper(
+        "hacc", config.get("zigbee2mqtt")["hostname"].asString(), config.get("zigbee2mqtt")["port"].asUInt());
     auto mqttClient = std::make_shared<protocol::mqtt::MqttClient>(mqttWrapper, eventDispatcher, eventQueue);
 
     core::DeviceManager deviceManager{};
