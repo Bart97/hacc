@@ -20,7 +20,7 @@ public:
     void abort() override;
 
 private:
-    std::atomic_flag shouldAbort{};
+    std::atomic<bool> shouldAbort{};
     std::mutex abortMutex;
     std::condition_variable conditionVariable;
 };

@@ -14,10 +14,10 @@ RecurringTimer::RecurringTimer(
         [callback, duration, &eventQueue, this]()
         {
             std::unique_lock lock(abortMutex);
-            while (!shouldAbort.test())
+            while (!shouldAbort.load())
             {
                 conditionVariable.wait_for(lock, duration);
-                if (!shouldAbort.test())
+                if (!shouldAbort.load())
                 {
                     eventQueue.push(event::createEvent(events::TimerExpiredEvent{callback}));
                 }
@@ -30,7 +30,7 @@ RecurringTimer::~RecurringTimer()
 {
     {
         std::scoped_lock guard(abortMutex);
-        shouldAbort.test_and_set();
+        shouldAbort.store(true);
     }
     conditionVariable.notify_all();
 }
@@ -39,7 +39,7 @@ void RecurringTimer::abort()
 {
     {
         std::scoped_lock guard(abortMutex);
-        shouldAbort.test_and_set();
+        shouldAbort.store(true);
     }
     conditionVariable.notify_all();
 }
