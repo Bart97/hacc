@@ -81,7 +81,9 @@ TEST_F(MetricsServiceTest, shouldAddAllSensorValuesToEntriesListForSingleDevice)
 
     EXPECT_CALL(
         *metricsServerMock,
-        store(UnorderedElementsAre(Entry{capability1Name, capability1value}, Entry{capability2Name, capability2value})))
+        store(UnorderedElementsAre(
+            Entry{capability1Name, deviceIdentifier, capability1value},
+            Entry{capability2Name, deviceIdentifier, capability2value})))
         .Times(1);
     EXPECT_CALL(deviceManagerMock, getAllDevices()).WillRepeatedly(Return(devicesList));
 
