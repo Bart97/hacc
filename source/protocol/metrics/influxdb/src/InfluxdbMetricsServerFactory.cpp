@@ -8,7 +8,7 @@ namespace protocol::metrics
 {
 namespace
 {
-std::string buildConnectionStringFromConfig(const InfluxdbConfigProvider& config)
+std::string buildConnectionStringFromConfig(const IInfluxdbConfigProvider& config)
 {
     return fmt::format(
         "http://{}:{}?db={} --{}", config.getHostname(), config.getPort(), config.getDatabase(), config.getApiKey());

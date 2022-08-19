@@ -1,6 +1,6 @@
 #pragma once
-#include "protocol/metrics/IMetricsServer.hpp"
 #include <memory>
+#include "protocol/metrics/IMetricsServer.hpp"
 
 namespace config
 {

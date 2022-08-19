@@ -35,6 +35,24 @@ std::string InfluxdbConfigProvider::getDatabase() const
     return config.get("influxdb")["database"].asString();
 }
 
+std::string InfluxdbConfigProvider::getBucket() const
+{
+    if (not hasKey("bucket"))
+    {
+        throw std::runtime_error("InfluxDB bucket not configured");
+    }
+    return config.get("influxdb")["bucket"].asString();
+}
+
+std::string InfluxdbConfigProvider::getOrganization() const
+{
+    if (not hasKey("organization"))
+    {
+        throw std::runtime_error("InfluxDB organization not configured");
+    }
+    return config.get("influxdb")["organization"].asString();
+}
+
 std::string InfluxdbConfigProvider::getApiKey() const
 {
     if (not hasKey("apiKey"))

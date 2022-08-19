@@ -6,7 +6,8 @@ set(TARGET_HEADERS
     inc/device/DeviceRange.hpp
     inc/device/ICapability.hpp
     inc/device/IDevice.hpp
-    inc/device/SensorType.hpp)
+    inc/device/SensorType.hpp
+    inc/util/Timestamp.hpp)
 
 set(TARGET_SOURCES
     src/device/CapabilityType.cpp

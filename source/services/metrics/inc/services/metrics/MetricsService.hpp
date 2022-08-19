@@ -8,7 +8,8 @@ namespace metrics
 class MetricsService
 {
 public:
-    MetricsService(timer::ITimerManager&, core::IDeviceManager&, std::shared_ptr<protocol::metrics::IMetricsServer> metricsServer);
+    MetricsService(
+        timer::ITimerManager&, core::IDeviceManager&, std::shared_ptr<protocol::metrics::IMetricsServer> metricsServer);
 
 private:
     void update();
