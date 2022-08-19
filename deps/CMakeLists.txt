@@ -1,4 +1,5 @@
 find_package(PkgConfig REQUIRED)
+include(find_curlpp.cmake)
 include(find_jsoncpp.cmake)
 add_subdirectory(googletest)
 add_subdirectory(spdlog)
