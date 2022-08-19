@@ -3,6 +3,7 @@
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/throw_exception.hpp>
 #include <spdlog/spdlog.h>
+#include <sstream>
 
 namespace
 {
