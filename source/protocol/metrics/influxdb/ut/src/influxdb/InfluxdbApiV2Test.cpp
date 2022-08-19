@@ -61,7 +61,7 @@ TEST_F(InfluxdbApiV2Test, writeWithSinglePoint_shouldBuildCorrectRequest)
     EXPECT_CALL(*requestMock, setUrl("localhost:2137/api/v2/write?bucket=dummyBucket&org=testOrg&precision=ns"));
     EXPECT_CALL(*requestMock, setMethod(http::Method::Post));
     EXPECT_CALL(*requestMock, setAuthorization("Token YOMOMA"));
-    EXPECT_CALL(*requestMock, setContent(testPoint.toLineProtocol()));
+    EXPECT_CALL(*requestMock, setContent(testPoint.toLineProtocol() + "\n"));
     EXPECT_CALL(*requestMock, execute());
     EXPECT_CALL(*requestMock, getResponseCode()).WillOnce(Return(successfulResponseCode));
     sut.write(testPoint);
@@ -81,7 +81,7 @@ TEST_F(InfluxdbApiV2Test, writeWithSinglePoint_shouldThrowIf401ResponseReceived)
     EXPECT_CALL(*requestMock, setUrl(_));
     EXPECT_CALL(*requestMock, setMethod(http::Method::Post));
     EXPECT_CALL(*requestMock, setAuthorization("Token YOMOMA"));
-    EXPECT_CALL(*requestMock, setContent(testPoint.toLineProtocol()));
+    EXPECT_CALL(*requestMock, setContent(testPoint.toLineProtocol() + "\n"));
     EXPECT_CALL(*requestMock, execute());
     EXPECT_CALL(*requestMock, getResponseCode()).WillOnce(Return(authenticationErrorResponseCode));
     EXPECT_THROW(sut.write(testPoint), std::runtime_error);

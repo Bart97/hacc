@@ -22,7 +22,6 @@ target_link_libraries(${TARGET_NAME}
     protocol_metrics_interface
     spdlog::spdlog
     PRIVATE
-    InfluxData::InfluxDB
     http)
 target_include_directories(${TARGET_NAME} PUBLIC inc)
 
