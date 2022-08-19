@@ -3,6 +3,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <memory>
+#include <thread>
 #include "event/EventQueueMock.hpp"
 #include "event/EventWrapper.hpp"
 #include "timer/events/TimerExpiredEvent.hpp"
