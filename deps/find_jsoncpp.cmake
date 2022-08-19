@@ -1,3 +1,3 @@
 include_guard()
 
-pkg_check_modules(JSONCPP jsoncpp)
+pkg_check_modules(JSONCPP REQUIRED jsoncpp)

@@ -26,6 +26,10 @@ target_link_libraries(${TARGET_NAME}
             mqtt
             ${JSONCPP_LIBRARIES}
             spdlog::spdlog)
-target_include_directories(${TARGET_NAME} PUBLIC inc)
+target_include_directories(${TARGET_NAME}
+        PUBLIC
+            inc
+        PRIVATE
+            ${JSONCPP_INCLUDE_DIRS})
 
 add_subdirectory(ut)
