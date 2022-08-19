@@ -1,6 +1,7 @@
 #include "protocol/metrics/influxdb/v2/InfluxdbApiV2.hpp"
 #include <boost/range/algorithm/for_each.hpp>
 #include <spdlog/spdlog.h>
+#include <sstream>
 #include <vector>
 #include "protocol/metrics/influxdb/Point.hpp"
 
@@ -15,10 +16,12 @@ InfluxdbApiV2::InfluxdbApiV2(http::IHttpRequestFactory& httpRequestFactory, cons
     , apiKey(config.getApiKey())
 {
 }
+
 void InfluxdbApiV2::write(const Point& point)
 {
     write(std::vector{point});
 }
+
 void InfluxdbApiV2::write(const PointRange& points)
 {
     const std::uint16_t expectedResponse{204};
