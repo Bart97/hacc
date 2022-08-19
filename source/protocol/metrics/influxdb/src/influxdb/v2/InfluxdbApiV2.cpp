@@ -23,7 +23,7 @@ void InfluxdbApiV2::write(const PointRange& points)
 {
     const std::uint16_t expectedResponse{204};
     std::stringstream ss;
-    boost::for_each(points, [&ss](const auto& point) { ss << point.toLineProtocol(); });
+    boost::for_each(points, [&ss](const auto& point) { ss << point.toLineProtocol() << "\n"; });
 
     auto request = httpRequestFactory.create();
     request->setUrl(

@@ -1,21 +1,17 @@
 #pragma once
 #include "protocol/metrics/IMetricsServer.hpp"
-
-namespace influxdb
-{
-class InfluxDB;
-} // namespace influxdb
+#include "protocol/metrics/influxdb/IInfluxdbApi.hpp"
 
 namespace protocol::metrics
 {
 class InfluxdbMetricsServer final : public IMetricsServer
 {
 public:
-    explicit InfluxdbMetricsServer(const std::string&);
+    explicit InfluxdbMetricsServer(std::shared_ptr<influxdb::IInfluxdbApi>);
     void store(const Entries&) override;
 
 public:
 private:
-    std::unique_ptr<influxdb::InfluxDB> influxDb;
+    std::shared_ptr<influxdb::IInfluxdbApi> influxdb;
 };
 } // namespace protocol::metrics

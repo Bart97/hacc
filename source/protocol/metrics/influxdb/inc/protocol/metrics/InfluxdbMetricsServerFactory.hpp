@@ -7,7 +7,13 @@ namespace config
 class ConfigFile;
 } // namespace config
 
+namespace protocol::http
+{
+class IHttpRequestFactory;
+} // namespace protocol::http
+
 namespace protocol::metrics
 {
-std::shared_ptr<IMetricsServer> createInfluxdbMetricsServer(const config::ConfigFile&);
+std::shared_ptr<IMetricsServer> createInfluxdbMetricsServer(
+    protocol::http::IHttpRequestFactory&, const config::ConfigFile&);
 } // namespace protocol::metrics

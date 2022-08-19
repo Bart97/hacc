@@ -5,6 +5,7 @@
 #include "event/EventQueue.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGateway.hpp"
 #include "gateway/zigbeemqtt/ZigbeeMqttGatewayFactory.hpp"
+#include "protocol/http/HttpRequestFactory.hpp"
 #include "protocol/metrics/InfluxdbMetricsServerFactory.hpp"
 #include "protocol/mqtt/MqttClient.hpp"
 #include "protocol/mqtt/MqttWrapperFactory.hpp"
@@ -41,13 +42,15 @@ int main(const int argc, const char* argv[])
 
     timer::TimerManager timerManager{eventQueue, eventDispatcher};
 
+    protocol::http::HttpRequestFactory httpRequestFactory{};
+
     auto mqttWrapper = protocol::mqtt::createMqttWrapper(
         "hacc", config.get("zigbee2mqtt")["hostname"].asString(), config.get("zigbee2mqtt")["port"].asUInt());
     auto mqttClient = std::make_shared<protocol::mqtt::MqttClient>(mqttWrapper, eventDispatcher, eventQueue);
 
     core::DeviceManager deviceManager{};
     deviceManager.addGateway(gateway::zigbeemqtt::createZigbeeMqttGateway(mqttClient));
-    auto metricsServer{protocol::metrics::createInfluxdbMetricsServer(config)};
+    auto metricsServer{protocol::metrics::createInfluxdbMetricsServer(httpRequestFactory, config)};
     metrics::MetricsService metricsService{timerManager, deviceManager, metricsServer};
 
     while (true)
