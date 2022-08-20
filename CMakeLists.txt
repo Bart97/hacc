@@ -7,7 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(MQTT_BUILD_TESTS OFF)
 set(MQTT_BUILD_EXAMPLES OFF)
 enable_testing()
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+
+# TODO: Remove -Wno-deprecated-volatile once jsoncpp is updated on Debian...
+add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-deprecated-volatile)
 
 add_subdirectory(deps)
 
