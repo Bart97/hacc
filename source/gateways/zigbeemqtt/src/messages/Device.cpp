@@ -3,6 +3,7 @@
 #include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <json/json.h>
+#include "util/JsonParser.hpp"
 
 namespace gateway::zigbeemqtt::messages
 {
@@ -34,9 +35,7 @@ Device deserialize(const Json::Value& json)
 
 Devices deserializeDevices(const std::string& jsonStr)
 {
-    Json::Reader reader;
-    Json::Value json;
-    reader.parse(jsonStr, json);
+    Json::Value json{util::parseJson(jsonStr)};
     Devices result{};
     result.reserve(json.size());
     std::transform(json.begin(), json.end(), std::back_inserter(result), &deserialize);

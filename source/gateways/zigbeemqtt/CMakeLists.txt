@@ -25,7 +25,9 @@ target_link_libraries(${TARGET_NAME}
             itf
             mqtt
             ${JSONCPP_LIBRARIES}
-            spdlog::spdlog)
+            spdlog::spdlog
+        PRIVATE
+            util)
 target_include_directories(${TARGET_NAME}
         PUBLIC
             inc

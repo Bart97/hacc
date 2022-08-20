@@ -1,5 +1,6 @@
 #include "gateway/zigbeemqtt/Capability.hpp"
 #include <json/json.h>
+#include "util/JsonParser.hpp"
 
 namespace
 {
@@ -44,9 +45,7 @@ const std::string& Capability::getName()
 
 void Capability::onUpdate(const protocol::mqtt::PublishedMessage& msg)
 {
-    Json::Reader reader;
-    Json::Value json;
-    reader.parse(msg.payload, json);
+    Json::Value json{util::parseJson(msg.payload)};
     value = json[jsonPath].asDouble();
 }
 } // namespace gateway::zigbeemqtt
