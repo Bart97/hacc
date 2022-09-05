@@ -58,6 +58,13 @@ void MetricsService::update()
             }
         }
     }
-    metricsServer->store(entries);
+    try
+    {
+        metricsServer->store(entries);
+    }
+    catch (const std::exception& e)
+    {
+        spdlog::error("Exception thrown while storing metrics: {}", e.what());
+    }
 }
 } // namespace metrics

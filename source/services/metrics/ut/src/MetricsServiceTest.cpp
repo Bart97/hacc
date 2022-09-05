@@ -59,6 +59,14 @@ TEST_F(MetricsServiceTest, shouldCallStoreOnceWhenTimerExpired)
     timerCallback();
 }
 
+TEST_F(MetricsServiceTest, shouldCatchExceptionThrownByMetricServer)
+{
+    storeTimerCallback();
+    MetricsService sut{timerManagerMock, deviceManagerMock, metricsServerMock};
+    EXPECT_CALL(*metricsServerMock, store(_)).Times(1).WillOnce(Throw(std::runtime_error("Dummy error")));
+    EXPECT_CALL(deviceManagerMock, getAllDevices()).WillRepeatedly(Return(device::DeviceRange{}));
+    EXPECT_NO_THROW(timerCallback());
+}
 TEST_F(MetricsServiceTest, shouldAddAllSensorValuesToEntriesListForSingleDevice)
 {
     using protocol::metrics::Entry;
