@@ -1,8 +1,10 @@
 SET(TARGET_NAME http)
 SET(TARGET_SOURCES
+    src/EscapeString.cpp
     src/HttpRequest.cpp
     src/HttpRequestFactory.cpp)
 SET(TARGET_HEADERS
+    inc/protocol/http/EscapeString.hpp
     inc/protocol/http/HttpRequest.hpp
     inc/protocol/http/HttpRequestFactory.hpp
     inc/protocol/http/IHttpRequest.hpp

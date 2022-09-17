@@ -9,7 +9,7 @@ namespace
 {
 const std::string configHostname{"localhost"};
 const std::string configBucket{"dummyBucket"};
-const std::string configOrganization{"testOrg"};
+const std::string configOrganization{"test Org"};
 const std::string configApiKey{"YOMOMA"};
 constexpr std::uint16_t configPort{2137};
 } // namespace
@@ -58,7 +58,7 @@ TEST_F(InfluxdbApiV2Test, writeWithSinglePoint_shouldBuildCorrectRequest)
     const auto& requestMock = requestMockPtr.get();
     EXPECT_CALL(httpRequestFactoryMock, create()).WillOnce(Return(ByMove(std::move(requestMockPtr))));
 
-    EXPECT_CALL(*requestMock, setUrl("localhost:2137/api/v2/write?bucket=dummyBucket&org=testOrg&precision=ns"));
+    EXPECT_CALL(*requestMock, setUrl("localhost:2137/api/v2/write?bucket=dummyBucket&org=test%20Org&precision=ns"));
     EXPECT_CALL(*requestMock, setMethod(http::Method::Post));
     EXPECT_CALL(*requestMock, setAuthorization("Token YOMOMA"));
     EXPECT_CALL(*requestMock, setContent(testPoint.toLineProtocol() + "\n"));
@@ -86,4 +86,5 @@ TEST_F(InfluxdbApiV2Test, writeWithSinglePoint_shouldThrowIf401ResponseReceived)
     EXPECT_CALL(*requestMock, getResponseCode()).WillOnce(Return(authenticationErrorResponseCode));
     EXPECT_THROW(sut.write(testPoint), std::runtime_error);
 }
+
 } // namespace protocol::metrics::influxdb::v2

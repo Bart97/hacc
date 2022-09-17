@@ -3,6 +3,7 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 #include <vector>
+#include "protocol/http/EscapeString.hpp"
 #include "protocol/metrics/influxdb/Point.hpp"
 
 namespace protocol::metrics::influxdb::v2
@@ -29,8 +30,12 @@ void InfluxdbApiV2::write(const PointRange& points)
     boost::for_each(points, [&ss](const auto& point) { ss << point.toLineProtocol() << "\n"; });
 
     auto request = httpRequestFactory.create();
-    request->setUrl(
-        fmt::format("{}:{}/api/v2/write?bucket={}&org={}&precision=ns", hostname, port, bucket, organization));
+    request->setUrl(fmt::format(
+        "{}:{}/api/v2/write?bucket={}&org={}&precision=ns",
+        hostname,
+        port,
+        protocol::http::escapeString(bucket),
+        protocol::http::escapeString(organization)));
     request->setMethod(http::Method::Post);
     request->setAuthorization("Token " + apiKey);
     request->setContent(ss.str());
