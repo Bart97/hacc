@@ -30,12 +30,7 @@ void InfluxdbApiV2::write(const PointRange& points)
     boost::for_each(points, [&ss](const auto& point) { ss << point.toLineProtocol() << "\n"; });
 
     auto request = httpRequestFactory.create();
-    request->setUrl(fmt::format(
-        "{}:{}/api/v2/write?bucket={}&org={}&precision=ns",
-        hostname,
-        port,
-        protocol::http::escapeString(bucket),
-        protocol::http::escapeString(organization)));
+    request->setUrl(buildWriteUrl());
     request->setMethod(http::Method::Post);
     request->setAuthorization("Token " + apiKey);
     request->setContent(ss.str());
@@ -46,5 +41,15 @@ void InfluxdbApiV2::write(const PointRange& points)
         BOOST_THROW_EXCEPTION(
             std::runtime_error("Failed to write points to InfluxDB: Response " + std::to_string(response)));
     }
+}
+
+std::string InfluxdbApiV2::buildWriteUrl() const
+{
+    return fmt::format(
+        "{}:{}/api/v2/write?bucket={}&org={}&precision=ns",
+        hostname,
+        port,
+        protocol::http::escapeString(bucket),
+        protocol::http::escapeString(organization));
 }
 } // namespace protocol::metrics::influxdb::v2

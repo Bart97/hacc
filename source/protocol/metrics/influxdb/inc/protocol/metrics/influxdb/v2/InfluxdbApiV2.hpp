@@ -13,6 +13,7 @@ public:
     void write(const PointRange& range) override;
 
 private:
+    std::string buildWriteUrl() const;
     protocol::http::IHttpRequestFactory& httpRequestFactory;
 
     const std::string hostname;
