@@ -26,6 +26,7 @@ namespace protocol::mqtt
 MqttWrapper::MqttWrapper(const std::string& id, const std::string& host, const std::uint16_t port)
     : ioContext()
 {
+    spdlog::info("[MQTT] Starting MQTT client with ID {}", id);
     client = ::mqtt::make_sync_client(ioContext, host, port);
     client->set_client_id(id);
     client->set_clean_session(true);

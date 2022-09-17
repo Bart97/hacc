@@ -26,6 +26,12 @@ std::string getConfigFilename(const int argc, const char* argv[])
 
     return defaultConfigFile;
 }
+
+#ifdef DEBUG
+std::string mqttClientId{"hacc-debug"};
+#else
+std::string mqttClientId{"hacc"};
+#endif
 } // namespace
 
 int main(const int argc, const char* argv[])
@@ -45,7 +51,7 @@ int main(const int argc, const char* argv[])
     protocol::http::HttpRequestFactory httpRequestFactory{};
 
     auto mqttWrapper = protocol::mqtt::createMqttWrapper(
-        "hacc", config.get("zigbee2mqtt")["hostname"].asString(), config.get("zigbee2mqtt")["port"].asUInt());
+        mqttClientId, config.get("zigbee2mqtt")["hostname"].asString(), config.get("zigbee2mqtt")["port"].asUInt());
     auto mqttClient = std::make_shared<protocol::mqtt::MqttClient>(mqttWrapper, eventDispatcher, eventQueue);
 
     core::DeviceManager deviceManager{};

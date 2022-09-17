@@ -11,6 +11,8 @@ enable_testing()
 # TODO: Remove -Wno-deprecated-volatile once jsoncpp is updated on Debian...
 add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-deprecated-volatile)
 
+add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>")
+
 add_subdirectory(deps)
 
 include(cmake/testing.cmake)
