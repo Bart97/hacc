@@ -32,6 +32,13 @@ bool ZigbeeDevice::isPresent()
 void ZigbeeDevice::onUpdate(const protocol::mqtt::PublishedMessage& msg)
 {
     spdlog::debug("Received update for device {}: {}", ieeeAddress, msg.payload);
+
+    if (msg.payload.empty())
+    {
+        spdlog::warn("Received empty update for device {}. Ignoring.", ieeeAddress);
+        return;
+    }
+
     for (auto capability : capabilities)
     {
         spdlog::debug("Updating capability {} for device {}", capability->getName(), ieeeAddress);

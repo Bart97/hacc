@@ -58,4 +58,10 @@ TEST_F(CapabilityTest, shouldReturnNaNValueAfterCreated)
     Capability sut{testMapping};
     EXPECT_TRUE(std::isnan(sut.getValue()));
 }
+
+TEST_F(CapabilityTest, unUpdate_shouldNotThrowWhenJsonParsingFailed)
+{
+    Capability sut{testMapping};
+    EXPECT_NO_THROW(sut.onUpdate(protocol::mqtt::PublishedMessage{"test", ""}));
+}
 } // namespace gateway::zigbeemqtt

@@ -1,5 +1,6 @@
 #include "gateway/zigbeemqtt/Capability.hpp"
 #include <json/json.h>
+#include "spdlog/spdlog.h"
 #include "util/JsonParser.hpp"
 
 namespace
@@ -44,8 +45,13 @@ const std::string& Capability::getName()
 }
 
 void Capability::onUpdate(const protocol::mqtt::PublishedMessage& msg)
+try
 {
     Json::Value json{util::parseJson(msg.payload)};
     value = json[jsonPath].asDouble();
+}
+catch (const std::exception& e)
+{
+    spdlog::warn("Failed to update capability: {}", e.what());
 }
 } // namespace gateway::zigbeemqtt
